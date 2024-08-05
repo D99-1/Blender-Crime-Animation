@@ -1,5 +1,160 @@
-<script>console.clear();</script>
-<script src="https://unpkg.com/three@0.87.1/build/three.js"></script>
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Crime Hydration</title>
+<link rel="stylesheet" href="./assets/css/style.css"/>
+<script src="./assets/js/script.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="https://unpkg.com/three@0.87.1/build/three.js"></script>
 <script src="https://unpkg.com/three@0.87.1/examples/js/controls/OrbitControls.js"></script>
 <script src="https://unpkg.com/three@0.87.1/examples/js/loaders/MTLLoader.js"></script>
 <script src="https://unpkg.com/three@0.87.1/examples/js/loaders/OBJLoader.js"></script>
+  <script type="module" src="./assets/js/main.js"> </script>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+/>
+</head>
+<body id="body">
+  <div class="light"></div>
+<script>
+  var pos = document.documentElement;
+  pos.addEventListener("mousemove", function(e) {
+    var x = e.clientX;
+    var y = e.clientY;
+    pos.style.setProperty('--x', x +150 + 'px');
+    pos.style.setProperty('--y', y+150 + 'px');
+  });
+</script>
+  <div class="preloader" id="preloader">
+    <img src="./assets/images/preloader.gif" alt="spinner">
+  </div>
+  <script>
+    const preloader = document.querySelector('.preloader');
+
+const fadeOutEffect = setInterval(() => {
+    
+    if (!preloader.style.opacity) {
+      preloader.style.opacity = 1;
+    }
+    if (preloader.style.opacity > 0) {
+      preloader.style.opacity -= .5;
+    } else {
+      preloader.remove();
+      clearInterval(fadeOutEffect);
+    }
+  }, 300);
+
+window.addEventListener('load', fadeOutEffect);
+  </script>
+  <nav class="nav">
+    <input type="checkbox" id="nav-check">
+    <div class="nav-header">
+      <div class="nav-title">
+        <a href="/"><img src="./assets/images/logo.png"></a>
+      </div>
+    </div>
+    
+    <ul class="nav-list">
+      <li class="nav-links-li"><a href="#">Home</a></li>
+      <li class="nav-links-li"><a href="/about">About</a></li>
+	<button class="purchase-button nav-purchase-button" onclick="window.location.href='/purchase'">Purchase</button>
+    </ul>
+  </nav>
+	<section class="main" id="main">
+    <div class="main-section">
+    <div class="main-text left-col">
+      <h1 class="animate__animated animate__zoomInDown">Level Up</h1>
+      <p>With Crime Hydration</p>
+      <button class="purchase-button" onclick="window.location.href='/purchase'">Purchase</button>
+    </div>
+  <!-- <img class="can-img" src="./assets/images/limelemon.png" height="800px" width="400px"/> -->
+  <lume-scene id="scene" perspective="800" webgl="true" style="position: absolute;">
+    <lume-point-light position="200 -200 200" intensity="1" color="white"></lume-point-light>
+    <lume-ambient-light color="white" intensity="0.5"></lume-ambient-light>
+    <lume-perspective-camera size="0 0 0" position="0 0 1000" rotation="0 0 0" active></lume-perspective-camera>
+
+    <lume-gltf-model src="./assets/images/crime.glb" rotation="0 -30 -45" position="700 500 0" origin="0.5 0.5 0.5" mount-point="0.5 0.5 0.5" size="1 1 1" id="model" scale="200 200 200"></lume-gltf-model>
+</lume-scene>
+
+<script src="https://unpkg.com/lume@0.3.0-alpha.14/dist/global.js"></script>
+<script>
+    LUME.useDefaultNames()
+   // model.rotation = (x, y, z) => [++x, --y, --z]
+   model.rotation = (x, y) => [x, y+0.1];
+   model.position = (x, y, z) => [x, y, 0.02 * (0 - z) + z]
+
+    tiltOnPointerMove(main, model, 50)
+
+    function tiltOnPointerMove(pointerContext, rotationTarget, rotationAmount = 15) {
+let pointers = new Set()
+pointerContext.addEventListener('pointerdown', event => pointers.add(event.pointerId))
+pointerContext.addEventListener('pointerup', event => pointers.delete(event.pointerId))
+
+// Slightly rotate the given element based on pointer movement.
+pointerContext.addEventListener('pointermove', event => {
+  if (pointers.size) return
+  rotationTarget.rotation.y = (event.clientX / pointerContext.offsetWidth) * (rotationAmount * 2) - rotationAmount
+  rotationTarget.rotation.x = -(
+    (event.clientY / pointerContext.offsetHeight) * (rotationAmount * 2) -
+    rotationAmount
+  )
+})
+}
+</script>
+</div>
+<div class="hydrate-section">
+	<h1 class="hydrate-text">H  Y  D  R  A  T  E</h1>
+  <h2 class="hydrate-text-subtitle">With Our Top Drinks</h2>
+  <div class="cards">
+  <div class="product-card">
+    <div class="filter"></div>
+    <img src="./assets/images/limelemon.png" alt="Lime-Lemon Can" style="width:150px">
+    <h1>Lime - Lemon</h1>
+    <p class="price">$3.99</p>
+    <p>The iconic taste of lime and lemon, now with criminal activity</p>
+   <button onclick="window.location.href='/purchase'">BUY</button>
+  </div>
+  <div class="product-card">
+    <div class="filter"></div>
+    <img src="./assets/images/bullred.png" alt="Bull Red Can" style="height:250px; width:250px; margin-top: 40px; margin-bottom: 30px;">
+    <h1>Bull Red</h1>
+    <p class="price">$4.99</p>
+    <p>Commonly confused with Red Bull (not the same thing)</p>
+   <button onclick="window.location.href='/purchase'">BUY</button>
+  </div>
+  <div class="product-card">
+    <div class="filter"></div>
+    <img src="./assets/images/beast.png" alt="" style="height:250px; width:120px; margin-top: 40px; margin-bottom: 30px;">
+    <h1>Beast</h1>
+    <p class="price">$3.99</p>
+    <p>Unleash the Beast! Reach your peak performance</p>
+   <button onclick="window.location.href='/purchase'">BUY</button>
+  </div>
+</div>
+		</div>
+  </section>
+  <section class="footer">
+    <div class="footer-section">
+      <div class="socials">
+        <a href="https://github.com/d99-1" target="_blank"><i class="fa fa-github fa-3x" style="color: #ffffff;"></i></a>      
+        <a href="https://buymeacoffee.com/Dhyan99" target="_blank"><i class="fa fa-coffee fa-3x" style="color: #ffffff;"></i></a>
+        <a href="https://dhyan99.is-a.dev" target="_blank"><i class="fa fa-regular fa-globe fa-3x" style="color: #ffffff;"></i></a>
+      </div>
+      <div class="footer-links">
+       <a href="#"><strong>Home</strong></a>
+        <a href="/about"><strong>About</strong></a>
+       <a href="/purchase"><strong>Purchase</strong></a>
+      </div>
+      <h1>This project is in no way affiliated with Prime Hydration LLC ©
+      </h1>
+
+    <h3>©2023 Dhyan99 | All Rights Reserved    </h3>
+    </div>
+  </section>
+</body>
+</html>
