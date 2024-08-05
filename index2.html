@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title>Babylon Template</title>
+
+   
+
+    </head>
+
+   <body>
+
+
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #222;
+        }
+    </style>
+    
+    <lume-scene id="scene" perspective="800" webgl="true">
+        <lume-point-light position="200 -200 200" intensity="3" color="white"></lume-point-light>
+        <lume-ambient-light color="white" intensity="2"></lume-ambient-light>
+        <lume-perspective-camera size="0 0 0" position="0 0 1000" rotation="0 0 0" active></lume-perspective-camera>
+    
+        <lume-gltf-model src="https://rawcdn.githack.com/KhronosGroup/glTF-Sample-Models/c99173c645f47fae603dcb2e7263e656e265cf06/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb" rotation="0 45 0" size="1 1 1" id="model" scale="200 200 200"></lume-gltf-model>
+    </lume-scene>
+    
+    <script src="https://unpkg.com/lume@0.3.0-alpha.14/dist/global.js"></script>
+    <script>
+        LUME.useDefaultNames()
+        model.rotation = (x, y, z) => [x, ++y, z]
+    </script>
+   </body>
+
+</html>
